@@ -7,7 +7,7 @@ A self-hosted bridge that connects a **Telegram bot** to **Claude Code** over th
 - **Instant auto-replies** — any message to the bot gets an AI reply in ~2 seconds (OpenAI-compatible LLM)
 - **Claude integration** — messages containing a keyword (default: `claude`) are routed to Claude Code for full-powered answers
 - **Emoji reactions** — automatically reacts to every incoming message 👍❤️🔥
-- **Photo support** — when someone sends a photo, the bot reacts and replies using the caption 📷
+- **Photo support + vision** — when someone sends a photo, the bot reacts, analyzes the image content with a vision model, and replies with a description 📷👁️
 - **Per-chat context** — each user only sees their own conversation history
 - **History persistence** — conversations survive restarts (saved to `.history.json`)
 - **Allowlist support** — optional: restrict usage to specific Telegram user IDs
