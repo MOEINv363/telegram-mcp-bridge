@@ -1,0 +1,12 @@
+# Secrets — NEVER commit these
+config.env
+.env
+*.local
+
+# Runtime data
+.cursor
+.history.json
+*.log
+
+# Node
+node_modules/

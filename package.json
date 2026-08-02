@@ -1,0 +1,19 @@
+{
+  "name": "telegram-mcp",
+  "version": "1.0.0",
+  "description": "Local MCP bridge from Claude Code to a Telegram bot with user allowlist",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "openai": "^7.3.0",
+    "zod": "^4.4.3"
+  }
+}
