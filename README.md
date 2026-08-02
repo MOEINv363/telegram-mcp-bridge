@@ -8,6 +8,7 @@ A self-hosted bridge that connects a **Telegram bot** to **Claude Code** over th
 - **Claude integration** — messages containing a keyword (default: `claude`) are routed to Claude Code for full-powered answers
 - **Emoji reactions** — automatically reacts to every incoming message 👍❤️🔥
 - **Photo support + vision** — when someone sends a photo, the bot reacts, analyzes the image content with a vision model, and replies with a description 📷👁️
+- **User feedback buttons** — every bot reply has 👍 / 👎 / 🚩 Report buttons; reports are sent to the admin 👍👎🚩
 - **Per-chat context** — each user only sees their own conversation history
 - **History persistence** — conversations survive restarts (saved to `.history.json`)
 - **Allowlist support** — optional: restrict usage to specific Telegram user IDs
