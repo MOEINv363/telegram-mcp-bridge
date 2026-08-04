@@ -6,6 +6,11 @@ compatibility_date = "2025-01-01"
 [triggers]
   crons = []
 
+# Chat memory (KV) - free tier
+[[kv_namespaces]]
+binding = "CHAT_HISTORY"
+id = "9a1deb06229f4c5db41f598c62246aef"
+
 [vars]
 # These are set via wrangler secret / dashboard, not committed.
 # TELEGRAM_BOT_TOKEN, GEMINI_API_KEY, BRIDGE_URL, GEMINI_MODEL

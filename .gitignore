@@ -9,6 +9,7 @@ wrangler.env
 .cursor
 .history.json
 *.log
+.tunnel-url
 
 # Node
 node_modules/
