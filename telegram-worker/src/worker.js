@@ -17,8 +17,15 @@ async function reactToMessage(botToken, chatId, messageId) {
   }).catch(() => null);
 }
 
-async function sendTelegram(botToken, chatId, text) {
+// In-memory map: replyId -> user question (resets on worker restart, acceptable)
+const replyContext = new Map();
+
+async function sendTelegram(botToken, chatId, text, userQuestion) {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+  const replyId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  if (userQuestion) {
+    replyContext.set(replyId, userQuestion);
+  }
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -28,9 +35,9 @@ async function sendTelegram(botToken, chatId, text) {
       reply_markup: {
         inline_keyboard: [
           [
-            { text: '👍', callback_data: 'fb:like:0' },
-            { text: '👎', callback_data: 'fb:dislike:0' },
-            { text: '🚩 Report', callback_data: 'fb:report:0' },
+            { text: '👍', callback_data: `fb:like:${replyId}` },
+            { text: '👎', callback_data: `fb:dislike:${replyId}` },
+            { text: '🚩 Report', callback_data: `fb:report:${replyId}` },
           ],
         ],
       },
@@ -88,11 +95,15 @@ export default {
       const cq = body.callback_query;
       const data = cq.data || '';
       if (data.startsWith('fb:')) {
-        const [, action] = data.split(':');
+        const parts = data.split(':');
+        const action = parts[1];
+        const replyId = parts[2] || '';
         const user = cq.from || {};
         const qmsg = cq.message || {};
         if (action === 'report') {
-          const reportText = `🚩 **New report**\n👤 From: ${user.first_name || ''} ${user.username ? '@' + user.username : ''} (ID: ${user.id})\n🤖 Bot reply: ${qmsg.text || ''}`;
+          const userQuestion = replyContext.get(replyId) || '(unknown)';
+          const reportText = `🚩 **New report**\n👤 From: ${user.first_name || ''} ${user.username ? '@' + user.username : ''} (ID: ${user.id})\n❓ User question: ${userQuestion}\n🤖 Bot reply: ${qmsg.text || ''}`;
+          replyContext.delete(replyId);
           const adminId = env.ADMIN_ID;
           if (adminId) {
             await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -134,7 +145,7 @@ export default {
         reply = 'Sorry, an error occurred.';
       }
     }
-    await sendTelegram(env.TELEGRAM_BOT_TOKEN, chatId, reply);
+    await sendTelegram(env.TELEGRAM_BOT_TOKEN, chatId, reply, text);
     return new Response('OK', { status: 200 });
   },
 };
