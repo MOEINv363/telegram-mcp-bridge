@@ -1,0 +1,11 @@
+name = "telegram-bridge-worker"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# The worker receives Telegram webhooks (no cron needed)
+[triggers]
+  crons = []
+
+[vars]
+# These are set via wrangler secret / dashboard, not committed.
+# TELEGRAM_BOT_TOKEN, GEMINI_API_KEY, BRIDGE_URL, GEMINI_MODEL

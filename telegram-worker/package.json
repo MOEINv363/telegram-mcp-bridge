@@ -1,0 +1,13 @@
+{
+  "name": "telegram-bridge-worker",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/worker.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.118.0"
+  }
+}

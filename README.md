@@ -14,6 +14,7 @@ A self-hosted bridge that connects a **Telegram bot** to **Claude Code** over th
 - **Allowlist support** — optional: restrict usage to specific Telegram user IDs
 - **SSE MCP server** — Claude connects over `http://127.0.0.1:8765/sse`
 - **Startup launcher** — runs at login, always available
+- **Cloudflare Worker fallback (optional)** — always-on layer that answers via Gemini when your PC is off (see [`telegram-worker/`](telegram-worker/README.md)) ☁️
 
 ## Architecture 🏗️
 
@@ -21,6 +22,8 @@ A self-hosted bridge that connects a **Telegram bot** to **Claude Code** over th
 Telegram bot ←→ bridge (node) ←→ LLM (auto-reply, instant)
                       │
                       └── MCP over SSE ←→ Claude Code (smart mode)
+
+(optional) Telegram webhook → Cloudflare Worker → local bridge (if online) or Gemini fallback
 ```
 
 ## Setup 🚀
@@ -65,7 +68,9 @@ Add to `~/.claude.json`:
 
 ## Configuration ⚙️
 
-See `config.env.example` for all options: bot token, allowlist, SSE port, auto-reply model, fallback model, Claude keyword.
+See `config.env.example` for all options: bot token, allowlist, SSE port, auto-reply model, fallback model, Claude keyword, vision model, admin ID.
+
+For the optional Cloudflare Worker layer, see [`telegram-worker/README.md`](telegram-worker/README.md).
 
 ## Security 🔒
 
